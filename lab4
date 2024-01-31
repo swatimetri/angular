@@ -1,0 +1,52 @@
+!-- app.component.html -->
+<div>
+  <h2>Angular Factorial and Square Calculator</h2>
+
+  <label for="numberInput">Enter a Number:</label>
+  <input type="number" id="numberInput" (input)="updateNumber($event)" />
+
+  <button (click)="calculateFactorial()">Calculate Factorial</button>
+  <button (click)="calculateSquare()">Calculate Square</button>
+
+  <div *ngIf="result !== undefined">
+    <h3>Result:</h3>
+    <p>{{ result }}</p>
+  </div>
+</div>
+
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'pgm04';
+  number: number = 0;
+  result: number | undefined;
+
+  updateNumber(event: any) {
+    this.number = parseInt(event.target.value) || 0;
+  }
+
+  calculateFactorial() {
+    this.result = this.factorial(this.number);
+  }
+
+  calculateSquare() {
+    this.result = this.number * this.number;
+  }
+
+  factorial(n: number): number {
+    if (n === 0 || n === 1) {
+      return 1;
+    } else {
+      return n * this.factorial(n - 1);
+    }
+  }
+}
