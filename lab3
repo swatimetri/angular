@@ -1,0 +1,75 @@
+<!-- app.component.html -->
+<div>
+  <h2>Angular Calculator</h2>
+
+  <label for="firstNumber">First Number:</label>
+  <input type="number" id="firstNumber" (input)="updateFirstNumber($event)" />
+
+  <label for="operation">Operation:</label>
+  <select id="operation" (change)="updateOperation($event)">
+    <option value="add">+</option>
+    <option value="subtract">-</option>
+    <option value="multiply">*</option>
+    <option value="divide">/</option>
+  </select>
+
+  <label for="secondNumber">Second Number:</label>
+  <input type="number" id="secondNumber" (input)="updateSecondNumber($event)" />
+
+  <button (click)="calculate()">Calculate</button>
+
+  <h3>Result: {{ result }}</h3>
+</div>
+
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+
+
+  export class AppComponent {
+    title = 'pgm03';
+    firstNumber: number = 0;
+    secondNumber: number = 0;
+    operation: string = 'add';
+    result: number = 0;
+  
+    updateFirstNumber(event: any) {
+      this.firstNumber = parseFloat(event.target.value) || 0;
+    }
+  
+    updateOperation(event: any) {
+      this.operation = event.target.value;
+    }
+  
+    updateSecondNumber(event: any) {
+      this.secondNumber = parseFloat(event.target.value) || 0;
+    }
+  
+    calculate() {
+      switch (this.operation) {
+        case 'add':
+          this.result = this.firstNumber + this.secondNumber;
+          break;
+        case 'subtract':
+          this.result = this.firstNumber - this.secondNumber;
+          break;
+        case 'multiply':
+          this.result = this.firstNumber * this.secondNumber;
+          break;
+        case 'divide':
+          this.result = this.secondNumber !== 0 ? this.firstNumber / this.secondNumber : Infinity;
+          break; // Fixed: Removed the semicolon and added Infinity as the fallback value
+        default:
+          this.result = 0;
+      }
+    }
+    
+  }
