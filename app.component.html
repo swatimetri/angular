@@ -1,0 +1,18 @@
+<!-- app.component.html -->
+<div>
+  <h2>Full Name Display</h2>
+  <form>
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" #firstName   />
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName"   #lastName />
+
+    <button type="button" (click)="displayFullName(firstName.value,lastName.value)">Display Full Name</button>
+  </form>
+
+  <div >
+    <h3>Full Name:</h3>
+    <p>{{ fullName }}</p>
+  </div>
+</div>
