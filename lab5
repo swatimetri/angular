@@ -1,0 +1,41 @@
+<h1>Student Details</h1>
+<label>Enter the number of students:</label>
+<input type="number" id="studentCountInput">
+<button (click)="updateStudentCount()">Submit</button>
+<br>
+
+<p>Total Students: {{ students.length }}</p>
+
+<div *ngFor="let student of students; let i = index">
+  <h3>Student {{ i + 1 }}</h3>
+  <p>Name: {{ student.name }}</p>
+  <p>CGPA: {{ student.cgpa }}</p>
+  <hr>
+</div>
+
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'pgm05';
+  students: { name: string, cgpa: number }[] = [];
+
+  updateStudentCount(): void {
+    const studentCountInput = document.getElementById('studentCountInput') as HTMLInputElement;
+    const studentCount = parseInt(studentCountInput.value, 10);
+
+    this.students = [];
+    for (let i = 0; i < studentCount; i++) {
+      this.students.push({ name: `Student ${i + 1}`, cgpa: Math.random() * 4 }); // Generating random CGPA
+    }
+  }
+  
+}
