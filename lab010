@@ -1,0 +1,35 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+@Component({
+selector: 'app-root',
+standalone: true,
+imports: [CommonModule],
+templateUrl: './app.component.html',
+styleUrl: './app.component.css'
+})
+export class AppComponent {
+items: string[] = ['Apple', 'Banana', 'Milk']; // Default items
+itemCount: number = this.items.length;
+addItem(newItem: string): void {
+this.items.push(newItem);
+this.itemCount = this.items.length;
+}
+removeItem(index: number): void {
+this.items.splice(index, 1);
+this.itemCount = this.items.length;
+}
+}
+
+<div>
+<h1>Item Collection</h1>
+<p>Total Items: {{ itemCount }}</p>
+<h2>Add Item</h2>
+<input type="text" #newItem />
+<button (click)="addItem(newItem.value)">Add</button>
+<h2>Items</h2>
+<ul>
+<li *ngFor="let item of items; let i = index">
+{{ item }} <button (click)="removeItem(i)">Remove</button>
+</li>
+</ul>
+</div>
