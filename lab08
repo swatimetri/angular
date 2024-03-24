@@ -1,0 +1,70 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+@Component({
+selector: 'app-root',
+standalone: true,
+imports: [CommonModule],
+templateUrl: './app.component.html',
+styleUrl: './app.component.css',
+})
+export class AppComponent {
+username: string = '';
+password: string = '';
+usernameInput: string = '';
+passwordInput: string = '';
+usernameInputTouched: boolean = false;
+passwordInputTouched: boolean = false;
+get usernameInputInvalid(): boolean {
+return this.usernameInputTouched && (this.usernameRequired || this.usernameMinlength);
+}
+get passwordInputInvalid(): boolean {
+return this.passwordInputTouched && (this.passwordRequired || this.passwordMinlength);
+}
+get usernameRequired(): boolean {
+return this.username.trim() === '';
+}
+get usernameMinlength(): boolean {
+return this.username.length < 5;
+}
+get passwordRequired(): boolean {
+return this.password.trim() === '';
+}
+get passwordMinlength(): boolean {
+return this.password.length < 8;
+}
+isValidForm(): boolean {
+return !this.usernameInputInvalid && !this.passwordInputInvalid;
+}
+login() {
+this.usernameInputTouched = true;
+this.passwordInputTouched = true;
+if (this.isValidForm()) {
+console.log('Username:', this.username);
+console.log('Password:', this.password);
+}
+}
+}
+
+<div>
+<h1>Login</h1>
+<div>
+<label for="usernameInput">Username:</label>
+<input id="usernameInput" type="text" #usernameInputRef required minlength="5"
+#usernameInput />
+<div *ngIf="usernameInputTouched && usernameInputInvalid">
+<span *ngIf="usernameRequired">Username is required.</span>
+<span *ngIf="usernameMinlength">Username must be at least 5 characters.</span>
+</div>
+</div>
+<div>
+<label for="passwordInput">Password:</label>
+<input id="passwordInput" type="password" #passwordInputRef required minlength="8"
+#passwordInput />
+<div *ngIf="passwordInputTouched && passwordInputInvalid">
+<span *ngIf="passwordRequired">Password is required.</span>
+<span *ngIf="passwordMinlength">Password must be at least 8 characters.</span>
+</div>
+</div>
+<button (click)="login()" [disabled]="!isValidForm()">Login</button>
+</div>
