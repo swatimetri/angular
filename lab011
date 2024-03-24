@@ -1,0 +1,38 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+@Component({
+selector: 'app-root',
+standalone: true,
+imports: [CommonModule],
+templateUrl: './app.component.html',
+styleUrl: './app.component.css'
+})
+export class AppComponent {
+students: Student[] = [
+{ name: 'John Doe', grade: 'A' },
+{ name: 'Jane Doe', grade: 'B' },
+{ name: 'Alice Smith', grade: 'C' }
+// Default student details
+];
+}
+export interface Student {
+name: string;
+grade: string;
+}
+<div>
+<h1>Student Details</h1>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Grade</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor="let student of students">
+<td>{{ student.name | uppercase }}</td>
+<td>{{ student.grade | uppercase }}</td>
+</tr>
+</tbody>
+</table>
+</div>
