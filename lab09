@@ -1,0 +1,50 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+@Component({
+selector: 'app-root',
+standalone:true,
+imports: [CommonModule],
+templateUrl: './app.component.html',
+styleUrl: './app.component.css',
+})
+export class AppComponent {
+employees: { name: string; salary: number }[] = [
+{ name: 'John Doe', salary: 50000 },
+{ name: 'Jane Doe', salary: 60000 },
+{ name: 'Bob Smith', salary: 55000 },
+{ name: 'Alice Johnson', salary: 70000 },
+{ name: 'Charlie Brown', salary: 48000 },
+];
+filteredEmployees: { name: string; salary: number }[] = [];
+searchEmployees(name: string, salary: string) {
+this.filteredEmployees = this.employees.filter((employee) =>
+this.matchesSearchCriteria(employee, name, salary)
+);
+}
+private matchesSearchCriteria(employee: { name: string; salary: number }, name: string,
+salary: string): boolean {
+const nameMatch = !name || employee.name.toLowerCase().includes(name.toLowerCase());
+const salaryMatch = salary === '' || employee.salary >= +salary;
+return nameMatch && salaryMatch;
+}
+}
+
+<div>
+<h1>Employee List</h1>
+<div>
+<label for="nameInput">Search by Name:</label>
+<input id="nameInput" type="text" #nameInput />
+</div>
+<div>
+<label for="salaryInput">Search by Salary (Min):</label>
+<input id="salaryInput" type="number" #salaryInput />
+</div>
+<button (click)="searchEmployees(nameInput.value, salaryInput.value)">Search</button>
+<h3>Filtered Employees</h3>
+<ul>
+<li *ngFor="let employee of filteredEmployees">
+{{ employee.name }} - Salary: {{ employee.salary | currency: 'USD':'symbol':'1.2-2'
+}}
+</li>
+</ul>
+</div>
